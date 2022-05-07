@@ -1,0 +1,138 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100vh;
+  text-align: center;
+  font-family: 'Spectral', serif;
+  font-size: 22px;
+  color: #357d81;
+  background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+  background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+  background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+}
+
+.container {  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;  
+}
+
+.textarea {
+  padding: 5px;
+  width: 830px;
+  border-radius: 5px;
+  border-color: #357d81;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background-color: #f6f6f6;
+}
+
+.keyboard__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  width: 830px;
+  gap: 5px;
+  border: 2px solid #50b4b9;
+  border-radius: 5px;
+  background: -webkit-linear-gradient(bottom, rgba(80,180,185,1) 0%, rgba(80,180,185,1) 50%, rgba(63,147,151,1) 100%);
+  background: -moz-linear-gradient(bottom, rgba(80,180,185,1) 0%, rgba(80,180,185,1) 50%, rgba(63,147,151,1) 100%);
+  background: linear-gradient(to bottom, rgba(80,180,185,1) 0%, rgba(80,180,185,1) 50%, rgba(63,147,151,1) 100%);
+  -webkit-box-shadow: 5px 5px 10px 0px rgba(2,54,61,1);
+  -moz-box-shadow: 5px 5px 10px 0px rgba(2,54,61,1);
+  box-shadow: 5px 5px 10px 0px rgba(2,54,61,1);
+}
+
+.keyboard__key {
+  width: 47px;
+  height: 47px;
+  border: 2px solid #357d81;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: inherit;
+  color: #F2EDE4;
+  background-color: transparent;
+  -webkit-box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.7);
+  -moz-box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.7);
+  box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.7);
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.keyboard__key:hover {
+  border-color: #F2EDE4;
+  -webkit-box-shadow: 0 0 5px #F2EDE4;
+  -moz-box-shadow: 0 0 5px #F2EDE4;
+  box-shadow: 0 0 5px #F2EDE4;
+}
+
+.keyboard__key:active {
+  background-color: #357d81;
+  transform: scale(0.95);
+}
+
+.Backspace,
+.Tab,
+.Delete,
+.CapsLock,
+.Enter,
+.ShiftLeft,
+.ShiftRight,
+.ControlLeft,
+.MetaLeft,
+.AltLeft,
+.Space,
+.AltRight,
+.ControlRight {
+  font-size: 18px;
+}
+
+.Backspace {
+  width: 126px;
+}
+
+.CapsLock {
+  width: 100px;
+}
+
+.Enter {
+  width: 125px;
+}
+
+.Tab {
+  width: 74px;
+}
+
+.ShiftLeft {
+  width: 114px;
+}
+
+.ShiftRight {
+  width: 110px;
+}
+
+.ControlLeft,
+.ControlRight {
+  width: 57px;
+}
+
+.Space {
+  width: 365px;
+}
