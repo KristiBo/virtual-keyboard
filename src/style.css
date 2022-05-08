@@ -32,6 +32,7 @@ body {
 .textarea {
   padding: 5px;
   width: 830px;
+  height: 170px;
   border-radius: 5px;
   border-color: #357d81;
   font-family: inherit;
@@ -83,7 +84,11 @@ body {
   box-shadow: 0 0 5px #F2EDE4;
 }
 
-.keyboard__key:active {
+.active {
+  border-color: #F2EDE4;
+  -webkit-box-shadow: 0 0 5px #F2EDE4;
+  -moz-box-shadow: 0 0 5px #F2EDE4;
+  box-shadow: 0 0 5px #F2EDE4;
   background-color: #357d81;
   transform: scale(0.95);
 }
