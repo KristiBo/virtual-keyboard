@@ -133,11 +133,14 @@ body {
   width: 110px;
 }
 
-.ControlLeft,
+.ControlLeft {
+  width: 62px;
+}
+
 .ControlRight {
   width: 57px;
 }
 
 .Space {
-  width: 365px;
+  width: 360px;
 }

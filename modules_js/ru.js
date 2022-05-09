@@ -132,7 +132,7 @@ const ru = [
   {
     key: 'ъ',
     shift: 'Ъ',
-    code: 'BracketLeft',
+    code: 'BracketRight',
   },
   {
     key: '\\',

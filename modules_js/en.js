@@ -132,7 +132,7 @@ const en = [
   {
     key: ']',
     shift: '}',
-    code: 'BracketLeft',
+    code: 'BracketRight',
   },
   {
     key: '\\',
@@ -290,7 +290,7 @@ const en = [
     code: 'AltLeft',
   },
   {
-    key: '',
+    key: ' ',
     shift: null,
     code: 'Space',
   },
