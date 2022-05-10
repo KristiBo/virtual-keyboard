@@ -290,7 +290,7 @@ const en = [
     code: 'AltLeft',
   },
   {
-    key: ' ',
+    key: '&nbsp;',
     shift: null,
     code: 'Space',
   },
