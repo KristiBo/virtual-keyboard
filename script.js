@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import en from '../modules_js/en.js';
+import en from './modules_js/en';
 
 const createKeyboard = () => {
   const keyboard = document.createElement('div');
