@@ -80,12 +80,17 @@ document.addEventListener('keydown', (event) => {
       container.append(keyboard);
     }
     if (event.code === 'CapsLock') {
-      container.removeChild(keyboard);
-      keyboard = changeKeyboardCaps();
-      container.append(keyboard);
+      setTimeout(() => {
+        container.removeChild(keyboard);
+        keyboard = changeKeyboardCaps();
+        container.append(keyboard);
+      }, 100);
     }
     if (event.code === 'Enter') textarea.value += '\n';
     if (event.code === 'Tab') textarea.value += '\u0009';
+    if (event.code === 'Backspace' && textarea.value.length > 0) {
+      textarea.value = textarea.value.slice(0, textarea.value.length - 1);
+    }
   }
 });
 
@@ -126,6 +131,9 @@ document.addEventListener('mousedown', (event) => {
     }
     if (event.target.dataset.key === 'Enter') textarea.value += '\n';
     if (event.target.dataset.key === 'Tab') textarea.value += '\u0009';
+    if (event.target.dataset.key === 'Backspace' && textarea.value.length > 0) {
+      textarea.value = textarea.value.slice(0, textarea.value.length - 1);
+    }
   }
 });
 
