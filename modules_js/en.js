@@ -140,11 +140,6 @@ const en = [
     code: 'Backslash',
   },
   {
-    key: 'Del',
-    shift: null,
-    code: 'Delete',
-  },
-  {
     key: 'CapsLock',
     shift: null,
     code: 'CapsLock',

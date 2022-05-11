@@ -20,6 +20,7 @@ const changeKeyboardShift = () => {
   en.forEach((el) => {
     const btn = document.createElement('button');
     btn.classList.add('keyboard__key', [el.code]);
+    if (el.code === 'ShiftLeft' || el.code === 'ShiftRight') btn.classList.add('active');
     btn.setAttribute('data-key', [el.code]);
     if (el.shift) {
       btn.innerHTML = el.shift;
@@ -35,6 +36,7 @@ const changeKeyboardCaps = () => {
   en.forEach((el) => {
     const btn = document.createElement('button');
     btn.classList.add('keyboard__key', [el.code]);
+    if (el.code === 'CapsLock') btn.classList.add('active');
     btn.setAttribute('data-key', [el.code]);
     if (el.key.length === 1) {
       btn.innerHTML = el.key.toUpperCase();
@@ -80,11 +82,9 @@ document.addEventListener('keydown', (event) => {
       container.append(keyboard);
     }
     if (event.code === 'CapsLock') {
-      setTimeout(() => {
-        container.removeChild(keyboard);
-        keyboard = changeKeyboardCaps();
-        container.append(keyboard);
-      }, 100);
+      container.removeChild(keyboard);
+      keyboard = changeKeyboardCaps();
+      container.append(keyboard);
     }
     if (event.code === 'Enter') textarea.value += '\n';
     if (event.code === 'Tab') textarea.value += '\u0009';
@@ -138,12 +138,14 @@ document.addEventListener('mousedown', (event) => {
 });
 
 document.addEventListener('mouseup', (event) => {
-  textarea.focus();
-  event.target.classList.remove('active');
-  if (event.target.dataset.key === 'ShiftLeft' || event.target.dataset.key === 'ShiftRight') {
-    container.removeChild(keyboard);
-    keyboard = createKeyboard();
-    container.append(keyboard);
+  if (event.target.dataset.key) {
+    textarea.focus();
+    event.target.classList.remove('active');
+    if (event.target.dataset.key === 'ShiftLeft' || event.target.dataset.key === 'ShiftRight') {
+      container.removeChild(keyboard);
+      keyboard = createKeyboard();
+      container.append(keyboard);
+    }
   }
 });
 

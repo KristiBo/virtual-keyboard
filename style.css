@@ -96,7 +96,6 @@ body {
 
 .Backspace,
 .Tab,
-.Delete,
 .CapsLock,
 .Enter,
 .ShiftLeft,
@@ -123,7 +122,11 @@ body {
 }
 
 .Tab {
-  width: 74px;
+  width: 90px;
+}
+
+.Backslash {
+  width: 83px;
 }
 
 .ShiftLeft {
