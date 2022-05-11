@@ -4,7 +4,7 @@ import ru from '../modules_js/ru.js';
 
 let flag;
 let lang;
-const language = JSON.parse(localStorage.getItem('language') || 'en');
+const language = JSON.parse(localStorage.getItem('language') || '"en"');
 
 const createKeyboard = () => {
   lang = 'en';
