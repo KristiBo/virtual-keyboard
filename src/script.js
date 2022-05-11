@@ -1,6 +1,8 @@
 /* eslint-disable import/extensions */
 import en from '../modules_js/en.js';
 
+let flag;
+
 const createKeyboard = () => {
   const keyboard = document.createElement('div');
   keyboard.classList.add('keyboard__container');
@@ -11,6 +13,7 @@ const createKeyboard = () => {
     btn.innerHTML = el.key;
     keyboard.appendChild(btn);
   });
+  flag = false;
   return keyboard;
 };
 
@@ -43,6 +46,7 @@ const changeKeyboardCaps = () => {
     } else btn.innerHTML = el.key;
     keyboard.appendChild(btn);
   });
+  flag = true;
   return keyboard;
 };
 
@@ -54,7 +58,7 @@ const createHTML = () => {
   const textarea = document.createElement('textarea');
   textarea.classList.add('textarea');
   const description = document.createElement('span');
-  description.innerHTML = 'The keyboard was created on Windows.<br>For change language: Left Ctrl + Alt (i`m sorry, it doesn`t work now).';
+  description.innerHTML = 'The keyboard was created on Windows.<br>For change language: Left Ctrl (i`m sorry, it doesn`t work now).';
   container.append(description, textarea, keyboard);
   document.body.appendChild(container);
 };
@@ -81,10 +85,16 @@ document.addEventListener('keydown', (event) => {
       keyboard = changeKeyboardShift();
       container.append(keyboard);
     }
-    if (event.code === 'CapsLock') {
+    if (event.code === 'CapsLock' && flag === false) {
       container.removeChild(keyboard);
       keyboard = changeKeyboardCaps();
       container.append(keyboard);
+    } else if (flag === true && event.code === 'CapsLock') {
+      setTimeout(() => {
+        container.removeChild(keyboard);
+        keyboard = createKeyboard();
+        container.append(keyboard);
+      }, 100);
     }
     if (event.code === 'Enter') textarea.value += '\n';
     if (event.code === 'Tab') textarea.value += '\u0009';
@@ -124,10 +134,16 @@ document.addEventListener('mousedown', (event) => {
       keyboard = changeKeyboardShift();
       container.append(keyboard);
     }
-    if (event.target.dataset.key === 'CapsLock') {
+    if (event.target.dataset.key === 'CapsLock' && flag === false) {
       container.removeChild(keyboard);
       keyboard = changeKeyboardCaps();
       container.append(keyboard);
+    } else if (flag === true && event.target.dataset.key === 'CapsLock') {
+      setTimeout(() => {
+        container.removeChild(keyboard);
+        keyboard = createKeyboard();
+        container.append(keyboard);
+      }, 200);
     }
     if (event.target.dataset.key === 'Enter') textarea.value += '\n';
     if (event.target.dataset.key === 'Tab') textarea.value += '\u0009';
