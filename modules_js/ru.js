@@ -285,7 +285,7 @@ const ru = [
     code: 'AltLeft',
   },
   {
-    key: '',
+    key: '&nbsp;',
     shift: null,
     code: 'Space',
   },
