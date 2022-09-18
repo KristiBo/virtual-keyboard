@@ -66,12 +66,12 @@ const en = [
   },
   {
     key: 'Backspace',
-    shift: null,
+    shift: 'Backspace',
     code: 'Backspace',
   },
   {
     key: 'Tab',
-    shift: null,
+    shift: 'Tab',
     code: 'Tab',
   },
   {
@@ -141,7 +141,7 @@ const en = [
   },
   {
     key: 'CapsLock',
-    shift: null,
+    shift: 'CapsLock',
     code: 'CapsLock',
   },
   {
@@ -201,12 +201,12 @@ const en = [
   },
   {
     key: 'Enter',
-    shift: null,
+    shift: 'Enter',
     code: 'Enter',
   },
   {
     key: 'Shift',
-    shift: null,
+    shift: 'Shift',
     code: 'ShiftLeft',
   },
   {
@@ -261,57 +261,57 @@ const en = [
   },
   {
     key: '&#129093;',
-    shift: null,
+    shift: '&#129093;',
     code: 'ArrowUp',
   },
   {
     key: 'Shift',
-    shift: null,
+    shift: 'Shift',
     code: 'ShiftRight',
   },
   {
     key: 'Ctrl',
-    shift: null,
+    shift: 'Ctrl',
     code: 'ControlLeft',
   },
   {
     key: 'Win',
-    shift: null,
+    shift: 'Win',
     code: 'MetaLeft',
   },
   {
     key: 'Alt',
-    shift: null,
+    shift: 'Alt',
     code: 'AltLeft',
   },
   {
     key: '&nbsp;',
-    shift: null,
+    shift: '&nbsp;',
     code: 'Space',
   },
   {
     key: 'Alt',
-    shift: null,
+    shift: 'Alt',
     code: 'AltRight',
   },
   {
     key: '&#129092;',
-    shift: null,
+    shift: '&#129092;',
     code: 'ArrowLeft',
   },
   {
     key: '&#129095;',
-    shift: null,
+    shift: '&#129095;',
     code: 'ArrowDown',
   },
   {
     key: '&#129094;',
-    shift: null,
+    shift: '&#129094;',
     code: 'ArrowRight',
   },
   {
     key: 'Ctrl',
-    shift: null,
+    shift: 'Ctrl',
     code: 'ControlRight',
   },
 ];

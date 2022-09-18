@@ -2,114 +2,48 @@
 import en from '../modules_js/en.js';
 import ru from '../modules_js/ru.js';
 
-let flag;
-let lang;
+let capsKey;
+let currentLanguage;
 const language = JSON.parse(localStorage.getItem('language') || '"en"');
 
-const createKeyboard = () => {
-  lang = 'en';
+const createKeyboard = (lang, size) => {
+  if (lang === en) {
+    currentLanguage = 'en';
+  } else {
+    currentLanguage = 'ru';
+  }
   const keyboard = document.createElement('div');
   keyboard.classList.add('keyboard__container');
-  en.forEach((el) => {
+  lang.forEach((el) => {
     const btn = document.createElement('button');
-    btn.classList.add('keyboard__key', [el.code]);
-    btn.setAttribute('data-key', [el.code]);
-    btn.innerHTML = el.key;
-    keyboard.appendChild(btn);
-  });
-  flag = false;
-  localStorage.setItem('language', JSON.stringify('en'));
-  return keyboard;
-};
-
-const createKeyboardRu = () => {
-  lang = 'ru';
-  const keyboard = document.createElement('div');
-  keyboard.classList.add('keyboard__container');
-  ru.forEach((el) => {
-    const btn = document.createElement('button');
-    btn.classList.add('keyboard__key', [el.code]);
-    btn.setAttribute('data-key', [el.code]);
-    btn.innerHTML = el.key;
-    keyboard.appendChild(btn);
-  });
-  flag = false;
-  localStorage.setItem('language', JSON.stringify('ru'));
-  return keyboard;
-};
-
-const changeKeyboardShift = () => {
-  const keyboard = document.createElement('div');
-  keyboard.classList.add('keyboard__container');
-  en.forEach((el) => {
-    const btn = document.createElement('button');
-    btn.classList.add('keyboard__key', [el.code]);
-    if (el.code === 'ShiftLeft' || el.code === 'ShiftRight') btn.classList.add('active');
-    btn.setAttribute('data-key', [el.code]);
-    if (el.shift) {
-      btn.innerHTML = el.shift;
-    } else btn.innerHTML = el.key;
-    keyboard.appendChild(btn);
-  });
-  return keyboard;
-};
-
-const changeKeyboardShiftRu = () => {
-  const keyboard = document.createElement('div');
-  keyboard.classList.add('keyboard__container');
-  ru.forEach((el) => {
-    const btn = document.createElement('button');
-    btn.classList.add('keyboard__key', [el.code]);
-    if (el.code === 'ShiftLeft' || el.code === 'ShiftRight') btn.classList.add('active');
-    btn.setAttribute('data-key', [el.code]);
-    if (el.shift) {
-      btn.innerHTML = el.shift;
-    } else btn.innerHTML = el.key;
-    keyboard.appendChild(btn);
-  });
-  return keyboard;
-};
-
-const changeKeyboardCaps = () => {
-  const keyboard = document.createElement('div');
-  keyboard.classList.add('keyboard__container');
-  en.forEach((el) => {
-    const btn = document.createElement('button');
-    btn.classList.add('keyboard__key', [el.code]);
-    if (el.code === 'CapsLock') btn.classList.add('active');
-    btn.setAttribute('data-key', [el.code]);
-    if (el.key.length === 1) {
+    btn.classList.add('keyboard__key', el.code);
+    btn.setAttribute('data-key', el.code);
+    if (size === 'caps' && el.key.length === 1) {
       btn.innerHTML = el.key.toUpperCase();
-    } else btn.innerHTML = el.key;
+    } else if (size === 'shift') {
+      if (el.code === 'ShiftLeft' || el.code === 'ShiftRight') btn.classList.add('active');
+      btn.innerHTML = el.shift;
+    } else {
+      btn.innerHTML = el.key;
+    }
+    if (size === 'caps' && el.code === 'CapsLock') btn.classList.add('active');
     keyboard.appendChild(btn);
   });
-  flag = true;
-  return keyboard;
-};
-
-const changeKeyboardCapsRu = () => {
-  const keyboard = document.createElement('div');
-  keyboard.classList.add('keyboard__container');
-  ru.forEach((el) => {
-    const btn = document.createElement('button');
-    btn.classList.add('keyboard__key', [el.code]);
-    if (el.code === 'CapsLock') btn.classList.add('active');
-    btn.setAttribute('data-key', [el.code]);
-    if (el.key.length === 1) {
-      btn.innerHTML = el.key.toUpperCase();
-    } else btn.innerHTML = el.key;
-    keyboard.appendChild(btn);
-  });
-  flag = true;
+  if (size === 'caps') {
+    capsKey = true;
+  } else {
+    capsKey = false;
+  }
+  localStorage.setItem('language', JSON.stringify(currentLanguage));
   return keyboard;
 };
 
 let keyboard;
 
 if (language === 'en') {
-  keyboard = createKeyboard();
+  keyboard = createKeyboard(en, 'little');
 } else {
-  keyboard = createKeyboardRu();
+  keyboard = createKeyboard(ru, 'little');
 }
 
 const createHTML = () => {
@@ -127,6 +61,12 @@ createHTML();
 const container = document.querySelector('.container');
 const textarea = document.querySelector('textarea');
 
+function changeKeyboard(currentKeyboard) {
+  container.removeChild(keyboard);
+  keyboard = currentKeyboard;
+  container.append(keyboard);
+}
+
 document.addEventListener('keydown', (event) => {
   event.preventDefault();
   const btn = document.querySelector(`[data-key=${event.code}]`);
@@ -141,36 +81,24 @@ document.addEventListener('keydown', (event) => {
       textarea.value += btn.innerText;
     }
     if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
-      if (lang === 'en') {
-        container.removeChild(keyboard);
-        keyboard = changeKeyboardShift();
-        container.append(keyboard);
+      if (currentLanguage === 'en') {
+        changeKeyboard(createKeyboard(en, 'shift'));
       } else {
-        container.removeChild(keyboard);
-        keyboard = changeKeyboardShiftRu();
-        container.append(keyboard);
+        changeKeyboard(createKeyboard(ru, 'shift'));
       }
     }
-    if (event.code === 'CapsLock' && flag === false) {
-      if (lang === 'en') {
-        container.removeChild(keyboard);
-        keyboard = changeKeyboardCaps();
-        container.append(keyboard);
+    if (event.code === 'CapsLock' && capsKey === false) {
+      if (currentLanguage === 'en') {
+        changeKeyboard(createKeyboard(en, 'caps'));
       } else {
-        container.removeChild(keyboard);
-        keyboard = changeKeyboardCapsRu();
-        container.append(keyboard);
+        changeKeyboard(createKeyboard(ru, 'caps'));
       }
-    } else if (flag === true && event.code === 'CapsLock') {
+    } else if (capsKey === true && event.code === 'CapsLock') {
       setTimeout(() => {
-        if (lang === 'en') {
-          container.removeChild(keyboard);
-          keyboard = createKeyboard();
-          container.append(keyboard);
+        if (currentLanguage === 'en') {
+          changeKeyboard(createKeyboard(en, 'little'));
         } else {
-          container.removeChild(keyboard);
-          keyboard = createKeyboardRu();
-          container.append(keyboard);
+          changeKeyboard(createKeyboard(ru, 'little'));
         }
       }, 100);
     }
@@ -179,17 +107,13 @@ document.addEventListener('keydown', (event) => {
     if (event.code === 'Backspace' && textarea.value.length > 0) {
       textarea.value = textarea.value.slice(0, textarea.value.length - 1);
     }
-    if (event.code === 'ControlLeft' && lang === 'en') {
+    if (event.code === 'ControlLeft' && currentLanguage === 'en') {
       setTimeout(() => {
-        container.removeChild(keyboard);
-        keyboard = createKeyboardRu();
-        container.append(keyboard);
+        changeKeyboard(createKeyboard(ru, 'little'));
       }, 100);
-    } else if (lang === 'ru' && event.code === 'ControlLeft') {
+    } else if (currentLanguage === 'ru' && event.code === 'ControlLeft') {
       setTimeout(() => {
-        container.removeChild(keyboard);
-        keyboard = createKeyboard();
-        container.append(keyboard);
+        changeKeyboard(createKeyboard(en, 'little'));
       }, 100);
     }
   }
@@ -200,14 +124,10 @@ document.addEventListener('keyup', (event) => {
   const btn = document.querySelector(`[data-key=${event.code}]`);
   if (btn) btn.classList.remove('active');
   if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
-    if (lang === 'en') {
-      container.removeChild(keyboard);
-      keyboard = createKeyboard();
-      container.append(keyboard);
+    if (currentLanguage === 'en') {
+      changeKeyboard(createKeyboard(en, 'little'));
     } else {
-      container.removeChild(keyboard);
-      keyboard = createKeyboardRu();
-      container.append(keyboard);
+      changeKeyboard(createKeyboard(ru, 'little'));
     }
   }
 });
@@ -227,36 +147,24 @@ document.addEventListener('mousedown', (event) => {
       textarea.value += event.target.innerText;
     }
     if (event.target.dataset.key === 'ShiftLeft' || event.target.dataset.key === 'ShiftRight') {
-      if (lang === 'en') {
-        container.removeChild(keyboard);
-        keyboard = changeKeyboardShift();
-        container.append(keyboard);
+      if (currentLanguage === 'en') {
+        changeKeyboard(createKeyboard(en, 'shift'));
       } else {
-        container.removeChild(keyboard);
-        keyboard = changeKeyboardShiftRu();
-        container.append(keyboard);
+        changeKeyboard(createKeyboard(ru, 'shift'));
       }
     }
-    if (event.target.dataset.key === 'CapsLock' && flag === false) {
-      if (lang === 'en') {
-        container.removeChild(keyboard);
-        keyboard = changeKeyboardCaps();
-        container.append(keyboard);
+    if (event.target.dataset.key === 'CapsLock' && capsKey === false) {
+      if (currentLanguage === 'en') {
+        changeKeyboard(createKeyboard(en, 'caps'));
       } else {
-        container.removeChild(keyboard);
-        keyboard = changeKeyboardCapsRu();
-        container.append(keyboard);
+        changeKeyboard(createKeyboard(ru, 'caps'));
       }
-    } else if (flag === true && event.target.dataset.key === 'CapsLock') {
+    } else if (capsKey === true && event.target.dataset.key === 'CapsLock') {
       setTimeout(() => {
-        if (lang === 'en') {
-          container.removeChild(keyboard);
-          keyboard = createKeyboard();
-          container.append(keyboard);
+        if (currentLanguage === 'en') {
+          changeKeyboard(createKeyboard(en, 'little'));
         } else {
-          container.removeChild(keyboard);
-          keyboard = createKeyboardRu();
-          container.append(keyboard);
+          changeKeyboard(createKeyboard(ru, 'little'));
         }
       }, 200);
     }
@@ -265,17 +173,13 @@ document.addEventListener('mousedown', (event) => {
     if (event.target.dataset.key === 'Backspace' && textarea.value.length > 0) {
       textarea.value = textarea.value.slice(0, textarea.value.length - 1);
     }
-    if (event.target.dataset.key === 'ControlLeft' && lang === 'en') {
+    if (event.target.dataset.key === 'ControlLeft' && currentLanguage === 'en') {
       setTimeout(() => {
-        container.removeChild(keyboard);
-        keyboard = createKeyboardRu();
-        container.append(keyboard);
+        changeKeyboard(createKeyboard(ru, 'little'));
       }, 200);
-    } else if (lang === 'ru' && event.target.dataset.key === 'ControlLeft') {
+    } else if (currentLanguage === 'ru' && event.target.dataset.key === 'ControlLeft') {
       setTimeout(() => {
-        container.removeChild(keyboard);
-        keyboard = createKeyboard();
-        container.append(keyboard);
+        changeKeyboard(createKeyboard(en, 'little'));
       }, 200);
     }
   }
@@ -286,14 +190,10 @@ document.addEventListener('mouseup', (event) => {
     textarea.focus();
     event.target.classList.remove('active');
     if (event.target.dataset.key === 'ShiftLeft' || event.target.dataset.key === 'ShiftRight') {
-      if (lang === 'en') {
-        container.removeChild(keyboard);
-        keyboard = createKeyboard();
-        container.append(keyboard);
+      if (currentLanguage === 'en') {
+        changeKeyboard(createKeyboard(en, 'little'));
       } else {
-        container.removeChild(keyboard);
-        keyboard = createKeyboardRu();
-        container.append(keyboard);
+        changeKeyboard(createKeyboard(ru, 'little'));
       }
     }
   }
